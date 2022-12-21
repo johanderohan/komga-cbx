@@ -1,0 +1,23 @@
+---
+version: "3.1"
+services:
+  komga-cbx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - KOMGA=http://localhost:8080
+        - USERNAME=yourmail@mail.com
+        - PASSWORD=123456
+        - BACKUP=/comics/backup #rar5 files will be moved to this folder
+    container_name: komga-cbx
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=022
+    volumes:
+      - .:/app
+      - /your/comics/directory:/comics #should be the same path configured in komga
+    ports:
+      - 8787:3000
+    restart: unless-stopped
